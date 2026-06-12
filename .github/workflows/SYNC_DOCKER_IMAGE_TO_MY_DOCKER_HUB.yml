@@ -1,3 +1,5 @@
+name: Mirror TurboOCR Image to ThriveXAI Docker Hub
+
 on:
   workflow_dispatch:
     inputs:
