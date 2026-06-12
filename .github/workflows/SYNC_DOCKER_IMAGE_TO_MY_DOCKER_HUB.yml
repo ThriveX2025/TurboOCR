@@ -1,0 +1,19 @@
+name: Mirror TurboOCR Image to ThriveXAI Docker Hub
+
+on:
+  workflow_dispatch:
+
+jobs:
+  skopeo-mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Skopeo is available
+        run: skopeo --version
+
+      - name: Mirror Image from GHCR to Docker Hub
+        run: |
+          skopeo copy \
+            --all \
+            docker://ghcr.io/aiptimizer/turboocr:v2.3.0 \
+            docker://docker.io/${{ secrets.DOCKER_USERNAME }}/turboocr:v2.3.0 \
+            --dest-creds "${{ secrets.DOCKER_USERNAME }}:${{ secrets.DOCKER_PASSWORD }}"
