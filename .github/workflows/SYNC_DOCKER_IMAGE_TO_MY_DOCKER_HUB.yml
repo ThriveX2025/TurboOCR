@@ -1,7 +1,16 @@
-name: Mirror TurboOCR Image to ThriveXAI Docker Hub
-
 on:
   workflow_dispatch:
+    inputs:
+      source_tag:
+        description: 'Source tag to pull from ghcr.io (e.g., v2.3.0)'
+        required: true
+        default: 'v2.3.0'
+        type: string
+      dest_tag:
+        description: 'Destination tag to push to Docker Hub (e.g., v2.3.0)'
+        required: true
+        default: 'v2.3.0'
+        type: string
 
 jobs:
   skopeo-mirror:
@@ -14,6 +23,6 @@ jobs:
         run: |
           skopeo copy \
             --all \
-            docker://ghcr.io/aiptimizer/turboocr:v2.3.0 \
-            docker://docker.io/${{ secrets.DOCKER_USERNAME }}/turboocr:v2.3.0 \
+            docker://ghcr.io/aiptimizer/turboocr:${{ inputs.source_tag }} \
+            docker://docker.io/${{ secrets.DOCKER_USERNAME }}/turboocr:${{ inputs.dest_tag }} \
             --dest-creds "${{ secrets.DOCKER_USERNAME }}:${{ secrets.DOCKER_PASSWORD }}"
