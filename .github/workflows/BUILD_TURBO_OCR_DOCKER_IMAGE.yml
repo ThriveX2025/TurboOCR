@@ -45,4 +45,5 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/turboocr:${{ inputs.dest_tag }}
           # Utilizes GitHub Actions cache to significantly speed up future builds
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # DELETE the cache-to line so it stops exporting:
+          # cache-to: type=gha,mode=max
